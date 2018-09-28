@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+    <data>
+        <variable
+            name="uiModel"
+            type="com.example.sauravrp.listings.views.models.ListingsUiModel" />
+        <variable
+            name="viewModel"
+            type="com.example.sauravrp.listings.viewmodels.ListingsViewModel"/>
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:onClick="@{() -> viewModel.selectListing(uiModel)}"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_toLeftOf="@+id/distance"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:text="@{uiModel.title}"
+                tools:text="Pizza Day" />
+
+            <TextView
+                android:id="@+id/distance"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_marginLeft="10dp"
+                android:text="@{@string/distance_in_mi(uiModel.distance)}"
+                tools:text="2 mi" />
+
+        </RelativeLayout>
+
+
+        <TextView
+            android:id="@+id/street"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:textSize="16sp"
+            android:text="@{uiModel.address.street != null ? @string/address_spec(uiModel.address.street, uiModel.address.city, uiModel.address.state) : @string/no_address_found}"
+            tools:text="10225 Research Blvd, Ste 110, Austin TX" />
+
+        <TextView
+            android:id="@+id/phone_number"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:textSize="16sp"
+            android:text="@{uiModel.phone != null ? uiModel.phone : @string/no_number_found}"
+            tools:text="555-555-5555" />
+
+
+    </LinearLayout>
+</layout>
