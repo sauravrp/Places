@@ -49,7 +49,7 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentLeft="true"
                     android:layout_toLeftOf="@+id/distance"
-                    android:text="@{viewModel.selection.title}"
+                    android:text="@{viewModel.selection.name}"
                     android:textSize="22sp"
                     android:textStyle="bold"
                     tools:text="Pizza Day" />
@@ -62,8 +62,8 @@
                     android:layout_centerVertical="true"
 
                     android:layout_marginLeft="10dp"
-                    android:text="@{@string/distance_in_mi(viewModel.selection.distance)}"
                     tools:text="2 mi" />
+                <!--android:text="@{@string/distance_in_mi(viewModel.selection.distance)}"-->
 
             </RelativeLayout>
 
@@ -104,9 +104,10 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentLeft="true"
                     android:layout_toLeftOf="@+id/direction_icon"
-                    android:text="@{viewModel.selection.address.street != null ? @string/address_spec(viewModel.selection.address.street, viewModel.selection.address.city, viewModel.selection.address.state) : @string/no_address_found}"
                     android:textSize="16sp"
                     tools:text="10225 Research Blvd, Ste 110, Austin TX" />
+
+                <!--android:text="@{viewModel.selection.address.street != null ? @string/address_spec(viewModel.selection.address.street, viewModel.selection.address.city, viewModel.selection.address.state) : @string/no_address_found}"-->
 
             </RelativeLayout>
 
@@ -124,10 +125,11 @@
                 android:text="@string/phone_number"
                 android:textColor="@color/grey" />
 
+            <!--android:onClick="@{() -> viewModel.phoneNumberSelected(viewModel.selection.phone)}"-->
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:onClick="@{() -> viewModel.phoneNumberSelected(viewModel.selection.phone)}"
                 android:orientation="horizontal"
                 android:paddingTop="10dp"
                 android:paddingBottom="10dp">
@@ -144,9 +146,9 @@
                     android:layout_height="wrap_content"
                     android:paddingTop="5dp"
                     android:paddingBottom="5dp"
-                    android:text="@{viewModel.selection.phone != null ? @string/call_number(viewModel.selection.phone) : @string/no_number_found}"
                     android:textSize="16sp"
                     tools:text="Call 555-555-5555" />
+                <!--android:text="@{viewModel.selection.phone != null ? @string/call_number(viewModel.selection.phone) : @string/no_number_found}"-->
 
             </LinearLayout>
 

@@ -77,7 +77,7 @@ public class ListingsDetailViewModelTest {
     private ListingsUiModel createListingsUiModel(String id) {
         Listing listing = new Listing();
         listing.setId(id);
-        listing.setTitle("Delicious Pizza");
+        listing.setName("Delicious Pizza");
         listing.setAddress("123 MLK blvd");
         listing.setCity("Austin");
         listing.setState("TX");
@@ -85,7 +85,7 @@ public class ListingsDetailViewModelTest {
         listing.setDistance(".7");
 
         return new ListingsUiModel(listing.getId(),
-                listing.getTitle(), listing.getAddress(), listing.getCity(),
+                listing.getName(), listing.getAddress(), listing.getCity(),
                 listing.getState(), listing.getPhone(), listing.getDistance());
     }
 }

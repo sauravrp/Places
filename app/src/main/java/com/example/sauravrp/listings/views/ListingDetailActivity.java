@@ -58,9 +58,9 @@ public class ListingDetailActivity extends AppCompatActivity {
     }
 
     private void gotoAddress(ListingsUiModel data) {
-        if(!TextUtils.isEmpty(data.getAddress().getStreet())
-                && !TextUtils.isEmpty(data.getAddress().getCity())) {
-            IntentHelper.launchMaps(this, data.getTitle(), data.getAddress().getStreet(), data.getAddress().getCity(), data.getAddress().getState());
-        }
+//        if(!TextUtils.isEmpty(data.getAddress().getStreet())
+//                && !TextUtils.isEmpty(data.getAddress().getCity())) {
+//            IntentHelper.launchMaps(this, data.getTitle(), data.getAddress().getStreet(), data.getAddress().getCity(), data.getAddress().getState());
+//        }
     }
 }

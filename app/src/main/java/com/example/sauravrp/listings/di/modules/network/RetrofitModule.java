@@ -13,7 +13,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 @Module
 public class RetrofitModule {
 
-    private static String BASE_URL = "https://query.yahooapis.com/v1/public/";
+    private static String BASE_URL = "https://api.foursquare.com/";
 
     private Retrofit retrofit;
 

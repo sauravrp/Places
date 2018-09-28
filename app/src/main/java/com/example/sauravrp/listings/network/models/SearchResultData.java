@@ -1,12 +1,12 @@
-package com.example.sauravrp.listings.network.models.unused;
+package com.example.sauravrp.listings.network.models;
 
 import com.google.gson.annotations.SerializedName;
 
 import java.util.ArrayList;
 
-public class ResultData {
+public class SearchResultData {
 
-    @SerializedName("Result")
+    @SerializedName("venues")
     private ArrayList<Listing> listings;
 
     public ArrayList<Listing> getListings() {

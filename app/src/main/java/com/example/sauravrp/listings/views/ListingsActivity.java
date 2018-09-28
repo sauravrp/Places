@@ -1,6 +1,7 @@
 package com.example.sauravrp.listings.views;
 
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -11,10 +12,8 @@ import android.widget.TextView;
 
 import com.example.sauravrp.listings.R;
 import com.example.sauravrp.listings.viewmodels.ListingsViewModel;
-import com.example.sauravrp.listings.viewmodels.models.Location;
 import com.example.sauravrp.listings.views.adapters.ListingsAdapter;
 import com.example.sauravrp.listings.views.models.ListingsUiModel;
-import com.example.sauravrp.listings.views.viewhelpers.EndlessRecyclerViewScrollListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,7 +25,7 @@ import butterknife.ButterKnife;
 import dagger.android.AndroidInjection;
 import io.reactivex.disposables.CompositeDisposable;
 
-public class ListingsActivity extends BaseLocationActivity {
+public class ListingsActivity extends AppCompatActivity {
 
     private final static String TAG = "ListingsActivity";
 
@@ -64,21 +63,32 @@ public class ListingsActivity extends BaseLocationActivity {
 
         showErrorText(false);
         showPlacesListView(false);
-        showLocationProgress(true);
-        getLocationListener().getLocation().observe(this, location -> {
-            // this won't fire, until onStart is complete, location listener is lifecycle aware
-            showErrorText(false);
-            showLocationProgress(false);
-            showNetworkProgress(true);
+//        showLocationProgress(true);
+    }
 
-            listingsViewModel.getMoreListings(Location.createLocation(location), 0);
-        });
+    @Override
+    protected void onStart() {
+        super.onStart();
+//        listingsViewModel.getListings().observe(this, location -> {
+//            // this won't fire, until onStart is complete, location listener is lifecycle aware
+//
+//
+//            listingsViewModel.searchListings(Location.createLocation(location), 0);
+//        });
     }
 
     @Override
     protected void onResume() {
         super.onResume();
+
         bind();
+
+        showErrorText(false);
+//        showLocationProgress(false);
+        showNetworkProgress(true);
+        listingsViewModel.searchListings("pizza");
+
+
     }
 
     @Override
@@ -104,16 +114,16 @@ public class ListingsActivity extends BaseLocationActivity {
         RecyclerView.ItemDecoration itemDecoration = new DividerItemDecoration(this, DividerItemDecoration.VERTICAL);
         listingsAdapter = new ListingsAdapter(listingsViewModel, placesList);
 
-        EndlessRecyclerViewScrollListener endlessScrollListener = new EndlessRecyclerViewScrollListener(layoutManager) {
-            @Override
-            public void onLoadMore(int page, int totalItemsCount, RecyclerView view) {
-
-                listingsViewModel.getMoreListings(totalItemsCount);
-            }
-        };
+//        EndlessRecyclerViewScrollListener endlessScrollListener = new EndlessRecyclerViewScrollListener(layoutManager) {
+//            @Override
+//            public void onLoadMore(int page, int totalItemsCount, RecyclerView view) {
+//
+//                listingsViewModel.searchListings(totalItemsCount);
+//            }
+//        };
         placesListView.setLayoutManager(layoutManager);
         placesListView.addItemDecoration(itemDecoration);
-        placesListView.addOnScrollListener(endlessScrollListener);
+//        placesListView.addOnScrollListener(endlessScrollListener);
         placesListView.setAdapter(listingsAdapter);
 
     }
@@ -124,7 +134,7 @@ public class ListingsActivity extends BaseLocationActivity {
         placesList.addAll(resultList);
         listingsAdapter.notifyDataSetChanged();
         showNetworkProgress(false);
-        showLocationProgress(false);
+//        showLocationProgress(false);
         showErrorText(false);
         showPlacesListView(true);
     }
@@ -132,7 +142,7 @@ public class ListingsActivity extends BaseLocationActivity {
     private void showError(Throwable error) {
         Log.d(TAG, error.toString());
         showNetworkProgress(false);
-        showLocationProgress(false);
+//        showLocationProgress(false);
         showErrorText(true);
         showPlacesListView(false);
     }
@@ -146,10 +156,10 @@ public class ListingsActivity extends BaseLocationActivity {
         progressTextView.setText(R.string.fetching_data);
     }
 
-    private void showLocationProgress(boolean visible) {
-        progressView.setVisibility(visible ? View.VISIBLE : View.GONE);
-        progressTextView.setText(R.string.fetching_location);
-    }
+//    private void showLocationProgress(boolean visible) {
+//        progressView.setVisibility(visible ? View.VISIBLE : View.GONE);
+//        progressTextView.setText(R.string.fetching_location);
+//    }
 
     private void showPlacesListView(boolean visible) {
         placesListView.setVisibility(visible ? View.VISIBLE : View.GONE);

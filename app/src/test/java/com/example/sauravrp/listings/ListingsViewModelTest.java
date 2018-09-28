@@ -105,7 +105,7 @@ public class ListingsViewModelTest {
 
         testObserver.assertEmpty();
 
-        listingsViewModel.getMoreListings(location, 0);
+        listingsViewModel.searchListings(location, 0);
 
         testObserver.assertNoErrors();
 
@@ -153,12 +153,12 @@ public class ListingsViewModelTest {
         testObserver.assertEmpty();
 
 
-        listingsViewModel.getMoreListings(location, 0);
+        listingsViewModel.searchListings(location, 0);
         testObserver.assertNoErrors();
         testObserver.assertValueCount(1);
         testObserver.assertValueAt(0, resultsUiModel);
 
-        listingsViewModel.getMoreListings(1);
+        listingsViewModel.searchListings(1);
         testObserver.assertNoErrors();
         testObserver.assertValueCount(2);
         testObserver.assertValueAt(1, resultsUiModelSecondSet);
@@ -171,14 +171,14 @@ public class ListingsViewModelTest {
 
         testObserver.assertEmpty();
 
-        listingsViewModel.getMoreListings(null, 0);
+        listingsViewModel.searchListings(null, 0);
         testObserver.assertEmpty();
     }
 
     private Listing createListing(String id) {
         Listing listing = new Listing();
         listing.setId(id);
-        listing.setTitle("Delicious Pizza");
+        listing.setName("Delicious Pizza");
         listing.setAddress("123 MLK blvd");
         listing.setCity("Austin");
         listing.setState("TX");
@@ -190,7 +190,7 @@ public class ListingsViewModelTest {
 
     private ListingsUiModel createListingsUiModel(Listing listing) {
         return new ListingsUiModel(listing.getId(),
-                listing.getTitle(), listing.getAddress(), listing.getCity(),
+                listing.getName(), listing.getAddress(), listing.getCity(),
                 listing.getState(), listing.getPhone(), listing.getDistance());
     }
 }
