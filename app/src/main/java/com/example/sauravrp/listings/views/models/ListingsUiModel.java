@@ -8,6 +8,8 @@ public class ListingsUiModel implements Serializable {
 
     private String name;
 
+    private boolean favorited;
+
 
     public ListingsUiModel(String id, String title) {
         this.id = id;
@@ -28,5 +30,13 @@ public class ListingsUiModel implements Serializable {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public boolean isFavorited() {
+        return favorited;
+    }
+
+    public void setFavorited(boolean favorited) {
+        this.favorited = favorited;
     }
 }

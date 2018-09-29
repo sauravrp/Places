@@ -6,33 +6,38 @@
     <uses-permission android:name="android.permission.CALL_PHONE" />
 
     <application
-        android:name="com.example.sauravrp.listings.ListingsApplication"
+        android:name=".ListingsApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
-        <uses-library android:name="android.test.runner"
+        <uses-library
+            android:name="android.test.runner"
             android:required="false" />
 
         <activity
-            android:name="com.example.sauravrp.listings.views.ListingsActivity"
-            android:label="@string/title_activity_pizza_me_view"
+            android:name=".views.ListingsActivity"
+            android:label="@string/title_activity_home_screen"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
-            android:name="com.example.sauravrp.listings.views.ListingDetailActivity"
+            android:name=".views.ListingDetailActivity"
             android:label="@string/title_activity_listing_detail"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".views.SearchActiivty"
+            android:label="@string/title_activity_search_actiivty"
+            android:theme="@style/AppTheme.NoActionBar">
+
+        </activity>
     </application>
 
 </manifest>

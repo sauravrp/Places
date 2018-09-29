@@ -11,6 +11,7 @@ import com.example.sauravrp.listings.views.models.ListingsUiModel;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import io.reactivex.Observable;
 import io.reactivex.subjects.PublishSubject;
@@ -51,9 +52,12 @@ public class ListingsViewModel extends ViewModel {
     }
 
     private List<ListingsUiModel> createUiModel(List<Listing> results) {
+       Set<String> favorites = storageModel.getFavorites();
         ArrayList<ListingsUiModel> newList = new ArrayList<>();
         for (Listing item : results) {
-            newList.add(new ListingsUiModel(item.getId(), item.getName()));
+            ListingsUiModel uiModel = new ListingsUiModel(item.getId(), item.getName());
+            uiModel.setFavorited(favorites.contains(uiModel.getId()));
+            newList.add(uiModel);
         }
 
         return newList;

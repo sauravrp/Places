@@ -6,28 +6,34 @@ import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
+import android.widget.SearchView;
 import android.widget.TextView;
 
 import com.example.sauravrp.listings.R;
 import com.example.sauravrp.listings.viewmodels.ListingsViewModel;
 import com.example.sauravrp.listings.views.adapters.ListingsAdapter;
 import com.example.sauravrp.listings.views.models.ListingsUiModel;
+import com.jakewharton.rxbinding2.widget.RxSearchView;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import dagger.android.AndroidInjection;
+import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 
 public class ListingsActivity extends AppCompatActivity {
 
     private final static String TAG = "ListingsActivity";
+    private final static int MINIMUM_SEARCH_THRESHOLD_IN_MILLISECONDS = 400;
 
     @Inject
     ListingsViewModel listingsViewModel;
@@ -43,6 +49,20 @@ public class ListingsActivity extends AppCompatActivity {
 
     @BindView(R.id.loading_text)
     TextView progressTextView;
+
+    @BindView(R.id.search_view)
+    SearchView searchView;
+
+    @BindView(R.id.welcome_view)
+    View welcomeView;
+
+    @BindView(R.id.results_view)
+    View resultsView;
+
+    @BindView(R.id.results_not_found_text)
+    TextView resultsNotFoundTextView;
+
+    private String searchQuery;
 
     private CompositeDisposable compositeDisposable;
 
@@ -61,34 +81,46 @@ public class ListingsActivity extends AppCompatActivity {
 
         listingsViewModel.getSelectedListing().observe(this, this::resultSelected);
 
-        showErrorText(false);
-        showPlacesListView(false);
-//        showLocationProgress(true);
+        showWelcomeView();
+        initSearchView();
     }
 
-    @Override
-    protected void onStart() {
-        super.onStart();
-//        listingsViewModel.getListings().observe(this, location -> {
-//            // this won't fire, until onStart is complete, location listener is lifecycle aware
-//
-//
-//            listingsViewModel.searchListings(Location.createLocation(location), 0);
-//        });
+    private void initSearchView() {
+
+        searchQuery = "";
+
+        searchView.setQueryHint(getString(R.string.action_search));
+
+        RxSearchView.queryTextChangeEvents(searchView)
+                .skip(1)
+                .debounce(MINIMUM_SEARCH_THRESHOLD_IN_MILLISECONDS, TimeUnit.MILLISECONDS)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(event -> {
+
+                    String query = event.queryText().toString();
+
+                    if (TextUtils.isEmpty(query)) {
+                        showWelcomeView();
+
+                        searchQuery = "";
+                        placesList.clear();
+                        listingsAdapter.notifyDataSetChanged();
+                    } else if (!searchQuery.equals(query)) {
+
+                        searchQuery = query;
+
+                        showNetworkProgress();
+                        listingsViewModel.searchListings(searchQuery);
+                    }
+                }, e -> Log.e(TAG, e.toString()));
+
     }
+
 
     @Override
     protected void onResume() {
         super.onResume();
-
         bind();
-
-        showErrorText(false);
-//        showLocationProgress(false);
-        showNetworkProgress(true);
-        listingsViewModel.searchListings("pizza");
-
-
     }
 
     @Override
@@ -104,7 +136,7 @@ public class ListingsActivity extends AppCompatActivity {
     }
 
     private void unBind() {
-        if(compositeDisposable != null) {
+        if (compositeDisposable != null) {
             compositeDisposable.clear();
         }
     }
@@ -113,57 +145,73 @@ public class ListingsActivity extends AppCompatActivity {
         LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         RecyclerView.ItemDecoration itemDecoration = new DividerItemDecoration(this, DividerItemDecoration.VERTICAL);
         listingsAdapter = new ListingsAdapter(listingsViewModel, placesList);
-
-//        EndlessRecyclerViewScrollListener endlessScrollListener = new EndlessRecyclerViewScrollListener(layoutManager) {
-//            @Override
-//            public void onLoadMore(int page, int totalItemsCount, RecyclerView view) {
-//
-//                listingsViewModel.searchListings(totalItemsCount);
-//            }
-//        };
         placesListView.setLayoutManager(layoutManager);
         placesListView.addItemDecoration(itemDecoration);
-//        placesListView.addOnScrollListener(endlessScrollListener);
         placesListView.setAdapter(listingsAdapter);
-
     }
 
     private void showResults(List<ListingsUiModel> resultList) {
-        if(resultList.size() == 0)
+        if (resultList.size() == 0) {
+            showResultsNotFoundView();
             return;
+        }
         placesList.addAll(resultList);
         listingsAdapter.notifyDataSetChanged();
-        showNetworkProgress(false);
-//        showLocationProgress(false);
-        showErrorText(false);
-        showPlacesListView(true);
+        showResultsView();
     }
 
     private void showError(Throwable error) {
         Log.d(TAG, error.toString());
-        showNetworkProgress(false);
-//        showLocationProgress(false);
-        showErrorText(true);
-        showPlacesListView(false);
+        showErrorView();
     }
 
-    private void showErrorText(boolean visible) {
-        errorText.setVisibility(visible ? View.VISIBLE : View.GONE);
+    private void showErrorView() {
+        errorText.setVisibility(View.VISIBLE);
+
+        progressView.setVisibility(View.GONE);
+        resultsView.setVisibility(View.GONE);
+        welcomeView.setVisibility(View.GONE);
+        resultsNotFoundTextView.setVisibility(View.GONE);
     }
 
-    private void showNetworkProgress(boolean visible) {
-        progressView.setVisibility(visible ? View.VISIBLE : View.GONE);
+    private void showNetworkProgress() {
+        progressView.setVisibility(View.VISIBLE);
         progressTextView.setText(R.string.fetching_data);
+
+        errorText.setVisibility(View.GONE);
+        resultsView.setVisibility(View.GONE);
+        welcomeView.setVisibility(View.GONE);
+        resultsNotFoundTextView.setVisibility(View.GONE);
+
     }
 
-//    private void showLocationProgress(boolean visible) {
-//        progressView.setVisibility(visible ? View.VISIBLE : View.GONE);
-//        progressTextView.setText(R.string.fetching_location);
-//    }
+    private void showResultsView() {
+        resultsView.setVisibility(View.VISIBLE);
 
-    private void showPlacesListView(boolean visible) {
-        placesListView.setVisibility(visible ? View.VISIBLE : View.GONE);
+        errorText.setVisibility(View.GONE);
+        progressView.setVisibility(View.GONE);
+        welcomeView.setVisibility(View.GONE);
+        resultsNotFoundTextView.setVisibility(View.GONE);
     }
+
+    private void showWelcomeView() {
+        welcomeView.setVisibility(View.VISIBLE);
+
+        resultsView.setVisibility(View.GONE);
+        errorText.setVisibility(View.GONE);
+        progressView.setVisibility(View.GONE);
+        resultsNotFoundTextView.setVisibility(View.GONE);
+    }
+
+    private void showResultsNotFoundView() {
+        resultsNotFoundTextView.setVisibility(View.VISIBLE);
+
+        welcomeView.setVisibility(View.GONE);
+        resultsView.setVisibility(View.GONE);
+        errorText.setVisibility(View.GONE);
+        progressView.setVisibility(View.GONE);
+    }
+
 
     private void resultSelected(ListingsUiModel selection) {
         ListingDetailActivity.startActivity(this, selection);

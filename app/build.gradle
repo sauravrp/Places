@@ -55,7 +55,6 @@ dependencies {
     // classpath.
     androidTestImplementation 'com.android.support.test.espresso:espresso-idling-resource:3.0.2'
 
-
     // ViewModel and LiveData
     implementation "android.arch.lifecycle:extensions:$lifecycle_version" // use -ktx for Kotlin
     // optional - ReactiveStreams support for LiveData
@@ -70,6 +69,10 @@ dependencies {
     implementation "io.reactivex.rxjava2:rxjava:$REACTIVE_X_RX_JAVA"
     // Mockito
     testImplementation 'org.mockito:mockito-core:1.10.19'
+
+    //RxBindings
+    implementation 'com.jakewharton.rxbinding2:rxbinding:2.2.0'
+//    implementation 'com.jakewharton.rxbinding2:rxbinding-appcompat-v7:2.2.0'
 
     // retrofit
     implementation "com.squareup.retrofit2:retrofit:$retrofit"
