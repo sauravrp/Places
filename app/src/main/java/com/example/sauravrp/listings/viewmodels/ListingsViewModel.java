@@ -6,6 +6,7 @@ import android.arch.lifecycle.ViewModel;
 
 import com.example.sauravrp.listings.network.models.Listing;
 import com.example.sauravrp.listings.repo.interfaces.IDataModel;
+import com.example.sauravrp.listings.repo.interfaces.IStorageModel;
 import com.example.sauravrp.listings.views.models.ListingsUiModel;
 
 import java.util.ArrayList;
@@ -18,12 +19,14 @@ import io.reactivex.subjects.PublishSubject;
 public class ListingsViewModel extends ViewModel {
 
     private final IDataModel dataModel;
+    private final IStorageModel storageModel;
 
     private final PublishSubject<String> listingsSubject = PublishSubject.create();
     private final MutableLiveData<ListingsUiModel> listingSelected = new MutableLiveData<>();
 
-    public ListingsViewModel(IDataModel dataModel) {
+    public ListingsViewModel(IDataModel dataModel, IStorageModel storageModel) {
         this.dataModel = dataModel;
+        this.storageModel = storageModel;
     }
 
     public Observable<List<ListingsUiModel>> getListings() {

@@ -3,6 +3,9 @@ package com.example.sauravrp.listings;
 import android.app.Activity;
 import android.app.Application;
 
+import com.example.sauravrp.listings.di.components.ApplicationComponent;
+import com.example.sauravrp.listings.di.components.DaggerApplicationComponent;
+import com.example.sauravrp.listings.di.modules.ApplicationModule;
 import com.facebook.stetho.Stetho;
 
 import javax.inject.Inject;
@@ -10,8 +13,6 @@ import javax.inject.Inject;
 import dagger.android.AndroidInjector;
 import dagger.android.DispatchingAndroidInjector;
 import dagger.android.HasActivityInjector;
-import com.example.sauravrp.listings.di.components.ApplicationComponent;
-import com.example.sauravrp.listings.di.components.DaggerApplicationComponent;
 
 public class ListingsApplication extends Application implements HasActivityInjector {
 
@@ -21,7 +22,7 @@ public class ListingsApplication extends Application implements HasActivityInjec
     @Override
     public void onCreate() {
         super.onCreate();
-        ApplicationComponent component = DaggerApplicationComponent.builder().build();
+        ApplicationComponent component = DaggerApplicationComponent.builder().applicationModule(new ApplicationModule(this)).build();
         component.inject(this);
         if(BuildConfig.DEBUG) {
             Stetho.initializeWithDefaults(this);
