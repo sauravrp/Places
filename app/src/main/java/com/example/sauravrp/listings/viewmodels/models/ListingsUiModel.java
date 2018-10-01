@@ -1,4 +1,4 @@
-package com.example.sauravrp.listings.views.models;
+package com.example.sauravrp.listings.viewmodels.models;
 
 import java.io.Serializable;
 
@@ -20,7 +20,7 @@ public class ListingsUiModel implements Serializable {
 
     private double longitude;
 
-        public ListingsUiModel(String id, String name) {
+    public ListingsUiModel(String id, String name) {
         this.id = id;
         this.name = name;
     }

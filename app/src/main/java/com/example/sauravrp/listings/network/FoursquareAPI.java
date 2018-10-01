@@ -20,8 +20,9 @@ public interface FoursquareAPI {
                                                          @Query("limit") int limit);
 
     @GET("v2/venues/{venueId}")
-    Single<ResultQuery<DetailResultData>> getListing(@Query("client_id") String clientID,
-                                                          @Query("client_secret") String clientSecret,
-                                                          @Query("v") String version,
-                                                          @Path("venueId") String id);
+    Single<ResultQuery<DetailResultData>> getListing(
+            @Path("venueId") String id,
+            @Query("client_id") String clientID,
+            @Query("client_secret") String clientSecret,
+            @Query("v") String version);
 }

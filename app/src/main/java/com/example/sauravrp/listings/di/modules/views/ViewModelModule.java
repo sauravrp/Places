@@ -18,7 +18,7 @@ public class ViewModelModule {
     }
 
     @Provides
-    ListingDetailViewModel providesListingDetailViewModel(ILocationService locationService) {
-        return new ListingDetailViewModel(locationService);
+    ListingDetailViewModel providesListingDetailViewModel(ILocationService locationService, IDataModel dataModel, IStorageModel storageModel) {
+        return new ListingDetailViewModel(locationService, dataModel, storageModel);
     }
 }

@@ -13,7 +13,7 @@ import com.example.sauravrp.listings.BR;
 import com.example.sauravrp.listings.R;
 import com.example.sauravrp.listings.helpers.IntentHelper;
 import com.example.sauravrp.listings.viewmodels.ListingDetailViewModel;
-import com.example.sauravrp.listings.views.models.ListingsUiModel;
+import com.example.sauravrp.listings.viewmodels.models.ListingsUiModel;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;

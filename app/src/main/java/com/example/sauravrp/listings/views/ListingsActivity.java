@@ -1,6 +1,5 @@
 package com.example.sauravrp.listings.views;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
@@ -17,7 +16,7 @@ import android.widget.TextView;
 import com.example.sauravrp.listings.R;
 import com.example.sauravrp.listings.viewmodels.ListingsViewModel;
 import com.example.sauravrp.listings.views.adapters.ListingsAdapter;
-import com.example.sauravrp.listings.views.models.ListingsUiModel;
+import com.example.sauravrp.listings.viewmodels.models.ListingsUiModel;
 import com.github.aakira.expandablelayout.ExpandableLinearLayout;
 import com.jakewharton.rxbinding2.widget.RxSearchView;
 

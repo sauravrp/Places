@@ -10,7 +10,7 @@
 
         <variable
             name="uiModel"
-            type="com.example.sauravrp.listings.views.models.ListingsUiModel" />
+            type="com.example.sauravrp.listings.viewmodels.models.ListingsUiModel" />
 
         <variable
             name="viewModel"

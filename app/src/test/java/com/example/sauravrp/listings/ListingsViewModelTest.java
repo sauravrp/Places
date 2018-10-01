@@ -7,7 +7,7 @@ import android.arch.lifecycle.Observer;
 import com.example.sauravrp.listings.network.models.unused.Listing;
 import com.example.sauravrp.listings.repo.interfaces.IDataModel;
 import com.example.sauravrp.listings.viewmodels.ListingsViewModel;
-import com.example.sauravrp.listings.views.models.ListingsUiModel;
+import com.example.sauravrp.listings.viewmodels.models.ListingsUiModel;
 
 import org.junit.AfterClass;
 import org.junit.Before;

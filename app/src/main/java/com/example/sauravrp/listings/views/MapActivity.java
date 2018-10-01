@@ -13,7 +13,7 @@ import android.widget.Toast;
 
 import com.example.sauravrp.listings.R;
 import com.example.sauravrp.listings.viewmodels.ListingsViewModel;
-import com.example.sauravrp.listings.views.models.ListingsUiModel;
+import com.example.sauravrp.listings.viewmodels.models.ListingsUiModel;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;

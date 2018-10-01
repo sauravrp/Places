@@ -1,4 +1,4 @@
-package com.example.sauravrp.listings.views.models;
+package com.example.sauravrp.listings.viewmodels.models;
 
 import java.io.Serializable;
 import java.util.Objects;
