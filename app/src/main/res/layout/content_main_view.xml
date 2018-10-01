@@ -6,15 +6,8 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     app:layout_behavior="@string/appbar_scrolling_view_behavior">
-    <SearchView
-        android:id="@+id/search_view"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="#339f9f9f"
-        android:iconifiedByDefault="false">
 
-        <requestFocus />
-    </SearchView>
+    <include layout="@layout/welcome_view"/>
 
     <FrameLayout
         android:layout_width="match_parent"
@@ -45,8 +38,6 @@
             android:visibility="gone" />
 
         <include layout="@layout/progress_view"/>
-
-        <include layout="@layout/welcome_view"/>
 
         <include layout="@layout/results_view"/>
 

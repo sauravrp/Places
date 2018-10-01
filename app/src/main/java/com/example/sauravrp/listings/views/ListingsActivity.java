@@ -16,6 +16,7 @@ import com.example.sauravrp.listings.R;
 import com.example.sauravrp.listings.viewmodels.ListingsViewModel;
 import com.example.sauravrp.listings.views.adapters.ListingsAdapter;
 import com.example.sauravrp.listings.views.models.ListingsUiModel;
+import com.github.aakira.expandablelayout.ExpandableLinearLayout;
 import com.jakewharton.rxbinding2.widget.RxSearchView;
 
 import java.util.ArrayList;
@@ -53,14 +54,14 @@ public class ListingsActivity extends AppCompatActivity {
     @BindView(R.id.search_view)
     SearchView searchView;
 
-    @BindView(R.id.welcome_view)
-    View welcomeView;
-
     @BindView(R.id.results_view)
     View resultsView;
 
     @BindView(R.id.results_not_found_text)
     TextView resultsNotFoundTextView;
+
+    @BindView(R.id.welcome_intro_expandible_layout)
+    ExpandableLinearLayout expandableLayout;
 
     private String searchQuery;
 
@@ -80,8 +81,6 @@ public class ListingsActivity extends AppCompatActivity {
         setupRecyclerView();
 
         listingsViewModel.getSelectedListing().observe(this, this::resultSelected);
-
-        showWelcomeView();
         initSearchView();
     }
 
@@ -99,18 +98,23 @@ public class ListingsActivity extends AppCompatActivity {
 
                     String query = event.queryText().toString();
 
+
                     if (TextUtils.isEmpty(query)) {
                         showWelcomeView();
 
                         searchQuery = "";
                         placesList.clear();
                         listingsAdapter.notifyDataSetChanged();
-                    } else if (!searchQuery.equals(query)) {
+                    } else {
+                        expandableLayout.collapse();
 
-                        searchQuery = query;
+                        if (!searchQuery.equals(query)) {
 
-                        showNetworkProgress();
-                        listingsViewModel.searchListings(searchQuery);
+                            searchQuery = query;
+
+                            showNetworkProgress();
+                            listingsViewModel.searchListings(searchQuery);
+                        }
                     }
                 }, e -> Log.e(TAG, e.toString()));
 
@@ -170,7 +174,7 @@ public class ListingsActivity extends AppCompatActivity {
 
         progressView.setVisibility(View.GONE);
         resultsView.setVisibility(View.GONE);
-        welcomeView.setVisibility(View.GONE);
+        expandableLayout.collapse();
         resultsNotFoundTextView.setVisibility(View.GONE);
     }
 
@@ -180,7 +184,7 @@ public class ListingsActivity extends AppCompatActivity {
 
         errorText.setVisibility(View.GONE);
         resultsView.setVisibility(View.GONE);
-        welcomeView.setVisibility(View.GONE);
+        expandableLayout.collapse();
         resultsNotFoundTextView.setVisibility(View.GONE);
 
     }
@@ -190,12 +194,13 @@ public class ListingsActivity extends AppCompatActivity {
 
         errorText.setVisibility(View.GONE);
         progressView.setVisibility(View.GONE);
-        welcomeView.setVisibility(View.GONE);
+        expandableLayout.collapse();
         resultsNotFoundTextView.setVisibility(View.GONE);
     }
 
     private void showWelcomeView() {
-        welcomeView.setVisibility(View.VISIBLE);
+
+        expandableLayout.expand();
 
         resultsView.setVisibility(View.GONE);
         errorText.setVisibility(View.GONE);
@@ -206,7 +211,7 @@ public class ListingsActivity extends AppCompatActivity {
     private void showResultsNotFoundView() {
         resultsNotFoundTextView.setVisibility(View.VISIBLE);
 
-        welcomeView.setVisibility(View.GONE);
+        expandableLayout.collapse();
         resultsView.setVisibility(View.GONE);
         errorText.setVisibility(View.GONE);
         progressView.setVisibility(View.GONE);
