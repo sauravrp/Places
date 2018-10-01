@@ -16,7 +16,7 @@ import io.reactivex.Single;
 @Singleton
 public class DataRepo implements IDataModel {
 
-    private final static int FETCH_SIZE = 15;
+    private final static int FETCH_SIZE = 50;
 
     private final static String CLIENT_ID = "LFYPFZ51PUQ2DZTMELQFHKEZTWA1MXJUJLF1WCOCZ4RM2HDU";
     private final static String CLIENT_SECRET = "QM40YP5GZW3GBLARSIKII3LKZUK054F0CK10TQJDFCRNSUA0";

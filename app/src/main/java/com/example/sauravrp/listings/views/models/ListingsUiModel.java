@@ -16,8 +16,11 @@ public class ListingsUiModel implements Serializable {
 
     private boolean isFavorite;
 
+    private double latitude;
 
-    public ListingsUiModel(String id, String name) {
+    private double longitude;
+
+        public ListingsUiModel(String id, String name) {
         this.id = id;
         this.name = name;
     }
@@ -68,5 +71,21 @@ public class ListingsUiModel implements Serializable {
 
     public void setDistance(float distance) {
         this.distance = distance;
+    }
+
+    public double getLatitude() {
+        return latitude;
+    }
+
+    public void setLatitude(double latitude) {
+        this.latitude = latitude;
+    }
+
+    public double getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(double longitude) {
+        this.longitude = longitude;
     }
 }

@@ -1,6 +1,7 @@
 <resources>
-    <string name="app_name">FourSquare</string>
+    <string name="app_name">Places</string>
     <string name="title_activity_home_screen">Places</string>
+    <string name="title_map_screen">Map</string>
     <string name="address_spec">%s, %s, %s</string>
     <string name="distance_in_mi">%.2f mi</string>
     <string name="error_fetching_result">Oops..Error Fetching listings</string>
@@ -19,7 +20,8 @@
     <string name="location_not_turned_on">Location not turned on. Exiting.</string>
     <string name="title_activity_search_actiivty">SearchActiivty</string>
     <string name="action_search">Search for places</string>
-    <string name="welcome_to_places">"Explore Seattle, WA</string>
+    <string name="welcome_to_places">Explore Seattle, WA</string>
     <string name="welcome_to_places_body">Search for your favorite spots</string>
     <string name="results_near_seattle_wa">Results Near Seattle, WA</string>
+    <string name="title_activity_map">MapActivity</string>
 </resources>

@@ -10,6 +10,7 @@ import com.example.sauravrp.listings.network.models.Listing;
 import com.example.sauravrp.listings.repo.interfaces.IDataModel;
 import com.example.sauravrp.listings.repo.interfaces.IStorageModel;
 import com.example.sauravrp.listings.service.interfaces.ILocationService;
+import com.example.sauravrp.listings.service.models.Location;
 import com.example.sauravrp.listings.views.models.ListingsUiModel;
 
 import java.util.ArrayList;
@@ -38,9 +39,13 @@ public class ListingsViewModel extends ViewModel {
         this.storageModel = storageModel;
     }
 
+    public Location getUserLocation() {
+        return locationService.getUserLocation();
+    }
+
     public Observable<List<ListingsUiModel>> getListings() {
         return listingsSubject
-                .flatMap(query -> dataModel.getListings(locationService.getLocation().getCurrentLocation(), query).toObservable())
+                .flatMap(query -> dataModel.getListings(locationService.getUserLocation().getCurrentLocation(), query).toObservable())
                 .flatMap(list -> Observable.just(createUiModel(list)));
     }
 
@@ -73,6 +78,8 @@ public class ListingsViewModel extends ViewModel {
                     uiModel.setIconUrl(category.getIcon().getPrefix() + BACKGROUND_GREY + Integer.toString(ICON_SIZE) + category.getIcon().getSuffix());
                 }
             }
+            uiModel.setLatitude(item.getLocation().getLat());
+            uiModel.setLongitude(item.getLocation().getLng());
             uiModel.setDistance(locationService.distanceFromInMiles(item.getLocation().getLat(), item.getLocation().getLng()));
 
             newList.add(uiModel);

@@ -4,7 +4,7 @@ import com.example.sauravrp.listings.service.models.Location;
 
 public interface ILocationService {
 
-    Location getLocation();
+    Location getUserLocation();
     float distanceFromInMiles(double latitude, double longitude);
 
 }

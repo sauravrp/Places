@@ -18,7 +18,7 @@ public class LocationService implements ILocationService {
     }
 
     @Override
-    public Location getLocation() {
+    public Location getUserLocation() {
         return mylocation;
     }
 

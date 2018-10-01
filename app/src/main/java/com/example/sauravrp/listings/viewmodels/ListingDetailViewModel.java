@@ -4,11 +4,22 @@ import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MutableLiveData;
 import android.arch.lifecycle.ViewModel;
 
+import com.example.sauravrp.listings.service.interfaces.ILocationService;
+import com.example.sauravrp.listings.service.models.Location;
 import com.example.sauravrp.listings.views.models.ListingsUiModel;
 
 public class ListingDetailViewModel extends ViewModel {
 
     private ListingsUiModel selection;
+    private ILocationService locationService;
+
+    public ListingDetailViewModel(ILocationService locationService) {
+        this.locationService = locationService;
+    }
+
+    public Location getUserLocation() {
+       return this.locationService.getUserLocation();
+    }
 
     private final MutableLiveData<String> phoneNumberSelected = new MutableLiveData<>();
 

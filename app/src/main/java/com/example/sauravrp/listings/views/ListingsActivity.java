@@ -1,6 +1,8 @@
 package com.example.sauravrp.listings.views;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
@@ -27,6 +29,7 @@ import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import dagger.android.AndroidInjection;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
@@ -62,6 +65,14 @@ public class ListingsActivity extends AppCompatActivity {
 
     @BindView(R.id.welcome_intro_expandible_layout)
     ExpandableLinearLayout expandableLayout;
+
+    @BindView(R.id.fab)
+    FloatingActionButton fabButton;
+
+    @OnClick(R.id.fab)
+    void fabClicked(View v) {
+        MapActivity.startActivity(this, searchQuery);
+    }
 
     private String searchQuery;
 
@@ -178,6 +189,7 @@ public class ListingsActivity extends AppCompatActivity {
         resultsView.setVisibility(View.GONE);
         expandableLayout.collapse();
         resultsNotFoundTextView.setVisibility(View.GONE);
+        fabButton.setVisibility(View.GONE);
     }
 
     private void showNetworkProgress() {
@@ -188,11 +200,13 @@ public class ListingsActivity extends AppCompatActivity {
         resultsView.setVisibility(View.GONE);
         expandableLayout.collapse();
         resultsNotFoundTextView.setVisibility(View.GONE);
+        fabButton.setVisibility(View.GONE);
 
     }
 
     private void showResultsView() {
         resultsView.setVisibility(View.VISIBLE);
+        fabButton.setVisibility(View.VISIBLE);
 
         errorText.setVisibility(View.GONE);
         progressView.setVisibility(View.GONE);
@@ -208,6 +222,7 @@ public class ListingsActivity extends AppCompatActivity {
         errorText.setVisibility(View.GONE);
         progressView.setVisibility(View.GONE);
         resultsNotFoundTextView.setVisibility(View.GONE);
+        fabButton.setVisibility(View.GONE);
     }
 
     private void showResultsNotFoundView() {
@@ -217,6 +232,7 @@ public class ListingsActivity extends AppCompatActivity {
         resultsView.setVisibility(View.GONE);
         errorText.setVisibility(View.GONE);
         progressView.setVisibility(View.GONE);
+        fabButton.setVisibility(View.GONE);
     }
 
 
