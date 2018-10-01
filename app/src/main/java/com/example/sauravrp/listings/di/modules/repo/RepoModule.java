@@ -1,4 +1,4 @@
-package com.example.sauravrp.listings.di.modules.services;
+package com.example.sauravrp.listings.di.modules.repo;
 
 import android.content.Context;
 
@@ -15,7 +15,7 @@ import dagger.Module;
 import dagger.Provides;
 
 @Module
-public class DataServiceModule {
+public class RepoModule {
 
     private DataRepo yahooDataService;
 

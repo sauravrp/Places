@@ -5,7 +5,7 @@ import java.util.List;
 public class Location {
     private String address;
     private double lat;
-    private double lon;
+    private double lng;
     private String postalCode;
     private String city;
     private String state;
@@ -28,12 +28,12 @@ public class Location {
         this.lat = lat;
     }
 
-    public double getLon() {
-        return lon;
+    public double getLng() {
+        return lng;
     }
 
-    public void setLon(double lon) {
-        this.lon = lon;
+    public void setLng(double lng) {
+        this.lng = lng;
     }
 
     public String getPostalCode() {

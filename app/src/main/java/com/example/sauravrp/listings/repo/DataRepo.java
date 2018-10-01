@@ -21,7 +21,6 @@ public class DataRepo implements IDataModel {
     private final static String CLIENT_ID = "LFYPFZ51PUQ2DZTMELQFHKEZTWA1MXJUJLF1WCOCZ4RM2HDU";
     private final static String CLIENT_SECRET = "QM40YP5GZW3GBLARSIKII3LKZUK054F0CK10TQJDFCRNSUA0";
     private final static String VERSION  = "20180928";
-    private final static String CITY = "Seattle,WA";
 
     private final FoursquareAPI yahooAPI;
     private final ISchedulerProvider schedulerProvider;
@@ -32,8 +31,8 @@ public class DataRepo implements IDataModel {
     }
 
     @Override
-    public Single<List<Listing>> getListings(final String query) {
-        return yahooAPI.searchListings(CLIENT_ID, CLIENT_SECRET, CITY, VERSION, query, FETCH_SIZE)
+    public Single<List<Listing>> getListings(final String city, final String query) {
+        return yahooAPI.searchListings(CLIENT_ID, CLIENT_SECRET, city, VERSION, query, FETCH_SIZE)
                 .subscribeOn(schedulerProvider.io())
                 .observeOn(schedulerProvider.ui())
                 .flatMap(resultQuery -> {

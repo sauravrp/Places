@@ -110,6 +110,8 @@ public class ListingsActivity extends AppCompatActivity {
 
                         if (!searchQuery.equals(query)) {
 
+                            placesList.clear();
+                            listingsAdapter.notifyDataSetChanged();
                             searchQuery = query;
 
                             showNetworkProgress();

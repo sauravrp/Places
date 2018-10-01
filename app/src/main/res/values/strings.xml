@@ -2,7 +2,7 @@
     <string name="app_name">FourSquare</string>
     <string name="title_activity_home_screen">Places</string>
     <string name="address_spec">%s, %s, %s</string>
-    <string name="distance_in_mi">%s mi</string>
+    <string name="distance_in_mi">%.2f mi</string>
     <string name="error_fetching_result">Oops..Error Fetching listings</string>
     <string name="no_number_found">Phone number not available</string>
     <string name="no_address_found">Address not available</string>

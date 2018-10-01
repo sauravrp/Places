@@ -8,6 +8,6 @@ import java.util.List;
 import io.reactivex.Single;
 
 public interface IDataModel {
-    Single<List<Listing>> getListings(String query);
+    Single<List<Listing>> getListings(String city, String query);
     Single<ListingDetail> getListingDetail(String id);
 }

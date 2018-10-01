@@ -31,4 +31,12 @@ public class Listing {
     public void setLocation(Location location) {
         this.location = location;
     }
+
+    public List<Category> getCategories() {
+        return categories;
+    }
+
+    public void setCategories(List<Category> categories) {
+        this.categories = categories;
+    }
 }

@@ -5,7 +5,8 @@ import com.example.sauravrp.listings.di.modules.ApplicationModule;
 import com.example.sauravrp.listings.di.modules.SchedulerModule;
 import com.example.sauravrp.listings.di.modules.network.FoursquareAPIModule;
 import com.example.sauravrp.listings.di.modules.network.RetrofitModule;
-import com.example.sauravrp.listings.di.modules.services.DataServiceModule;
+import com.example.sauravrp.listings.di.modules.repo.RepoModule;
+import com.example.sauravrp.listings.di.modules.service.LocationModule;
 import com.example.sauravrp.listings.di.modules.views.ActivityBuilderModule;
 import com.example.sauravrp.listings.di.modules.views.ViewModelModule;
 
@@ -19,7 +20,9 @@ import dagger.android.AndroidInjectionModule;
         // these can be in NetworkComponent if need be
         RetrofitModule.class, FoursquareAPIModule.class,
         // data service layer
-        DataServiceModule.class,
+        RepoModule.class,
+        // services layer,
+        LocationModule.class,
         // view model
         ViewModelModule.class,
         // helper

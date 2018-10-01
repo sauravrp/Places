@@ -8,12 +8,18 @@ public class ListingsUiModel implements Serializable {
 
     private String name;
 
-    private boolean favorited;
+    private String category;
+
+    private String iconUrl;
+
+    private float distance;
+
+    private boolean isFavorite;
 
 
-    public ListingsUiModel(String id, String title) {
+    public ListingsUiModel(String id, String name) {
         this.id = id;
-        this.name = title;
+        this.name = name;
     }
 
     public String getId() {
@@ -32,11 +38,35 @@ public class ListingsUiModel implements Serializable {
         this.name = name;
     }
 
-    public boolean isFavorited() {
-        return favorited;
+    public boolean isFavorite() {
+        return isFavorite;
     }
 
-    public void setFavorited(boolean favorited) {
-        this.favorited = favorited;
+    public void setFavorite(boolean favorite) {
+        this.isFavorite = favorite;
+    }
+
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
+    }
+
+    public String getIconUrl() {
+        return iconUrl;
+    }
+
+    public void setIconUrl(String iconUrl) {
+        this.iconUrl = iconUrl;
+    }
+
+    public float getDistance() {
+        return distance;
+    }
+
+    public void setDistance(float distance) {
+        this.distance = distance;
     }
 }
