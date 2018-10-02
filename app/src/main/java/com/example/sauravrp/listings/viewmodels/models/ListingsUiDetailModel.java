@@ -1,5 +1,7 @@
 package com.example.sauravrp.listings.viewmodels.models;
 
+import java.util.Objects;
+
 public class ListingsUiDetailModel extends ListingsUiModel {
 
     private String url;
@@ -43,5 +45,30 @@ public class ListingsUiDetailModel extends ListingsUiModel {
 
     public void setAddress(ListingsAddressUiModel address) {
         this.address = address;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        ListingsUiDetailModel that = (ListingsUiDetailModel) o;
+        return Objects.equals(url, that.url) &&
+                Objects.equals(phone, that.phone) &&
+                Objects.equals(address, that.address);
+    }
+
+    @Override
+    public int hashCode() {
+
+        return Objects.hash(url, phone, address);
+    }
+
+    @Override
+    public String toString() {
+        return "ListingsUiDetailModel{" +
+                "url='" + url + '\'' +
+                ", phone='" + phone + '\'' +
+                ", address=" + address +
+                '}';
     }
 }

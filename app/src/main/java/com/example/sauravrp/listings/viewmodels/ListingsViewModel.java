@@ -8,7 +8,6 @@ import android.databinding.ObservableList;
 import com.example.sauravrp.listings.repo.interfaces.IDataModel;
 import com.example.sauravrp.listings.repo.interfaces.IStorageModel;
 import com.example.sauravrp.listings.service.interfaces.ILocationService;
-import com.example.sauravrp.listings.service.models.Location;
 import com.example.sauravrp.listings.viewmodels.helper.ModelConverters;
 import com.example.sauravrp.listings.viewmodels.models.ListingsUiModel;
 
@@ -35,10 +34,6 @@ public class ListingsViewModel extends ViewModel {
 
     public ObservableList<String> getFavorites() {
         return storageModel.getFavorites();
-    }
-
-    public Location getUserLocation() {
-        return locationService.getUserLocation();
     }
 
     public Observable<List<ListingsUiModel>> getListings() {

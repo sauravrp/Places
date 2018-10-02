@@ -4,8 +4,16 @@ package com.example.sauravrp.listings;
 import android.arch.core.executor.testing.InstantTaskExecutorRule;
 import android.arch.lifecycle.Observer;
 
+import com.example.sauravrp.listings.network.models.Contact;
+import com.example.sauravrp.listings.network.models.Listing;
+import com.example.sauravrp.listings.network.models.ListingDetail;
+import com.example.sauravrp.listings.network.models.Location;
 import com.example.sauravrp.listings.repo.interfaces.IDataModel;
+import com.example.sauravrp.listings.repo.interfaces.IStorageModel;
+import com.example.sauravrp.listings.service.interfaces.ILocationService;
 import com.example.sauravrp.listings.viewmodels.ListingsViewModel;
+import com.example.sauravrp.listings.viewmodels.helper.ModelConverters;
+import com.example.sauravrp.listings.viewmodels.models.ListingsUiDetailModel;
 import com.example.sauravrp.listings.viewmodels.models.ListingsUiModel;
 
 import org.junit.AfterClass;
@@ -34,10 +42,16 @@ import static org.mockito.Mockito.verify;
 public class ListingsViewModelTest {
 
     @Mock
+    Observer<ListingsUiModel> listingObserver;
+
+    @Mock
     private IDataModel dataModel;
 
     @Mock
-    Observer<ListingsUiModel> listingObserver;
+    private ILocationService locationService;
+
+    @Mock
+    private IStorageModel storageModel;
 
     private ListingsViewModel listingsViewModel;
 
@@ -66,14 +80,14 @@ public class ListingsViewModelTest {
     @Before
     public void setup() {
         MockitoAnnotations.initMocks(this);
-        listingsViewModel = new ListingsViewModel(dataModel);
+        listingsViewModel = new ListingsViewModel(locationService, dataModel, storageModel);
     }
 
 
     @Test
     public void testListingSelected() {
 
-        ListingsUiModel data = createListingsUiModel(createListing("1"));
+        ListingsUiModel data = createListingsUiModel("1");
 
         listingsViewModel.getSelectedListing().observeForever(listingObserver);
         listingsViewModel.selectListing(data);
@@ -91,11 +105,12 @@ public class ListingsViewModelTest {
         resultsUiModel.add(createListingsUiModel(serverResults.get(0)));
         resultsUiModel.add(createListingsUiModel(serverResults.get(1)));
 
-        Location location = new Location(0, 0);
 
-        Mockito.when(dataModel.getListings(location.getLatitude(),
-                location.getLongitude(),
-                0)).thenReturn(Single.just(serverResults));
+        String city = "Austin, Tx";
+        com.example.sauravrp.listings.service.models.Location location = new com.example.sauravrp.listings.service.models.Location(city, 0.0, 0.0);
+        Mockito.when(locationService.getUserLocation()).thenReturn(location);
+        Mockito.when(locationService.distanceFromInMiles(0, 0)).thenReturn(2.0f);
+        Mockito.when(dataModel.getListings(city, "pizza")).thenReturn(Single.just(serverResults));
 
 
         TestObserver<List<ListingsUiModel>> testObserver = listingsViewModel.getListings()
@@ -103,7 +118,7 @@ public class ListingsViewModelTest {
 
         testObserver.assertEmpty();
 
-        listingsViewModel.searchListings(location, 0);
+        listingsViewModel.searchListings("pizza");
 
         testObserver.assertNoErrors();
 
@@ -111,84 +126,35 @@ public class ListingsViewModelTest {
 
         testObserver.assertValueAt(0, resultsUiModel);
 
-    }
-
-
-    @Test
-    public void testGetListingWithJustOffset() {
-
-        ArrayList<Listing> serverResults = new ArrayList<>();
-        serverResults.add(createListing("1"));
-        serverResults.add(createListing("2"));
-
-        ArrayList<ListingsUiModel> resultsUiModel = new ArrayList();
-        resultsUiModel.add(createListingsUiModel(serverResults.get(0)));
-        resultsUiModel.add(createListingsUiModel(serverResults.get(1)));
-
-
-        ArrayList<Listing> serverResultsSecondSet = new ArrayList<>();
-        serverResultsSecondSet.add(createListing("3"));
-        serverResultsSecondSet.add(createListing("4"));
-
-        ArrayList<ListingsUiModel> resultsUiModelSecondSet = new ArrayList();
-        resultsUiModelSecondSet.add(createListingsUiModel(serverResultsSecondSet.get(0)));
-        resultsUiModelSecondSet.add(createListingsUiModel(serverResultsSecondSet.get(1)));
-
-        Location location = new Location(0, 0);
-
-        Mockito.when(dataModel.getListings(location.getLatitude(),
-                location.getLongitude(),
-                0)).thenReturn(Single.just(serverResults));
-
-        Mockito.when(dataModel.getListings(location.getLatitude(),
-                location.getLongitude(),
-                1)).thenReturn(Single.just(serverResultsSecondSet));
-
-
-        TestObserver<List<ListingsUiModel>> testObserver = listingsViewModel.getListings()
-                .test();
-
-        testObserver.assertEmpty();
-
-
-        listingsViewModel.searchListings(location, 0);
-        testObserver.assertNoErrors();
-        testObserver.assertValueCount(1);
-        testObserver.assertValueAt(0, resultsUiModel);
-
-        listingsViewModel.searchListings(1);
-        testObserver.assertNoErrors();
-        testObserver.assertValueCount(2);
-        testObserver.assertValueAt(1, resultsUiModelSecondSet);
-    }
-
-    @Test
-    public void testGetListingEmptyLocation() {
-        TestObserver<List<ListingsUiModel>> testObserver = listingsViewModel.getListings()
-                .test();
-
-        testObserver.assertEmpty();
-
-        listingsViewModel.searchListings(null, 0);
-        testObserver.assertEmpty();
     }
 
     private Listing createListing(String id) {
-        Listing listing = new Listing();
-        listing.setId(id);
-        listing.setName("Delicious Pizza");
-        listing.setAddress("123 MLK blvd");
-        listing.setCity("Austin");
-        listing.setState("TX");
-        listing.setPhone("111-111-1111");
-        listing.setDistance(".7");
 
+        String name = "Delicious Pizza";
+
+        ListingDetail listing = new ListingDetail();
+        listing.setId(id);
+        listing.setName(name);
+        listing.setLocation(new Location());
+        Contact contact = new Contact();
+        contact.setPhone("111-111-1111");
+        listing.setContact(contact);
         return listing;
     }
 
+    private ListingDetail createListingDetail(String id) {
+        return (ListingDetail)createListing(id);
+    }
+
+    private ListingsUiModel createListingsUiModel(String id) {
+        return ModelConverters.createListingsUiModel(createListing(id), 2.0f);
+    }
+
     private ListingsUiModel createListingsUiModel(Listing listing) {
-        return new ListingsUiModel(listing.getId(),
-                listing.getName(), listing.getAddress(), listing.getCity(),
-                listing.getState(), listing.getPhone(), listing.getDistance());
+        return ModelConverters.createListingsUiModel(listing, 2.0f);
+    }
+
+    private ListingsUiDetailModel createDetailsListingsUiModel(String id) {
+        return ModelConverters.createListingsUiDetailModel(createListingDetail(id), 2.0f);
     }
 }

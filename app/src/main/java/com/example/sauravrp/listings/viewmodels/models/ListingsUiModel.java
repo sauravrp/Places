@@ -1,6 +1,7 @@
 package com.example.sauravrp.listings.viewmodels.models;
 
 import java.io.Serializable;
+import java.util.Objects;
 
 public class ListingsUiModel implements Serializable {
 
@@ -77,5 +78,38 @@ public class ListingsUiModel implements Serializable {
 
     public void setLongitude(double longitude) {
         this.longitude = longitude;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        ListingsUiModel that = (ListingsUiModel) o;
+        return Float.compare(that.distance, distance) == 0 &&
+                Double.compare(that.latitude, latitude) == 0 &&
+                Double.compare(that.longitude, longitude) == 0 &&
+                Objects.equals(id, that.id) &&
+                Objects.equals(name, that.name) &&
+                Objects.equals(category, that.category) &&
+                Objects.equals(iconUrl, that.iconUrl);
+    }
+
+    @Override
+    public int hashCode() {
+
+        return Objects.hash(id, name, category, iconUrl, distance, latitude, longitude);
+    }
+
+    @Override
+    public String toString() {
+        return "ListingsUiModel{" +
+                "id='" + id + '\'' +
+                ", name='" + name + '\'' +
+                ", category='" + category + '\'' +
+                ", iconUrl='" + iconUrl + '\'' +
+                ", distance=" + distance +
+                ", latitude=" + latitude +
+                ", longitude=" + longitude +
+                '}';
     }
 }
