@@ -4,11 +4,9 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.databinding.ObservableArrayList;
 import android.databinding.ObservableList;
-import android.util.ArraySet;
 
 import com.example.sauravrp.listings.repo.interfaces.IStorageModel;
 
-import java.util.Observable;
 import java.util.Set;
 import java.util.TreeSet;
 

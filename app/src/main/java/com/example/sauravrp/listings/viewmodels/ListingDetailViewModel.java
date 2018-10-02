@@ -25,9 +25,11 @@ public class ListingDetailViewModel extends ViewModel {
 
     private MutableLiveData<ListingsUiDetailModel> selection = new MutableLiveData<>();
 
-    public ObservableList<String> getFavorites() {
-        return storageModel.getFavorites();
-    }
+    private final MutableLiveData<String> phoneNumberSelected = new MutableLiveData<>();
+
+    private final MutableLiveData<ListingsUiDetailModel> addressSelected = new MutableLiveData<>();
+
+    private final MutableLiveData<String> webUrlSelected = new MutableLiveData<>();
 
     public ListingDetailViewModel(ILocationService locationService, IDataModel dataModel, IStorageModel storageModel) {
         this.locationService = locationService;
@@ -35,24 +37,26 @@ public class ListingDetailViewModel extends ViewModel {
         this.storageModel = storageModel;
     }
 
+    public ObservableList<String> getFavorites() {
+        return storageModel.getFavorites();
+    }
+
+
     public Location getUserLocation() {
        return this.locationService.getUserLocation();
     }
 
-    private final MutableLiveData<String> phoneNumberSelected = new MutableLiveData<>();
-
-    private final MutableLiveData<ListingsUiModel> addressSelected = new MutableLiveData<>();
 
     public void phoneNumberSelected(String number) {
         phoneNumberSelected.setValue(number);
     }
 
-    public void addressSelected(ListingsUiModel address) {
+    public void addressSelected(ListingsUiDetailModel address) {
         addressSelected.setValue(address);
     }
 
     public void websiteSelected(String url) {
-
+        webUrlSelected.setValue(url);
     }
 
     public void favorite() {
@@ -67,8 +71,12 @@ public class ListingDetailViewModel extends ViewModel {
         return phoneNumberSelected;
     }
 
-    public LiveData<ListingsUiModel> getSelectedAddress() {
+    public LiveData<ListingsUiDetailModel> getSelectedAddress() {
         return addressSelected;
+    }
+
+    public LiveData<String> getSelectedWebSite() {
+        return webUrlSelected;
     }
 
     public void setSelection(ListingsUiModel sel) {

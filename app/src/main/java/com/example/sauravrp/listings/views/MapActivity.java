@@ -12,6 +12,7 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.example.sauravrp.listings.R;
+import com.example.sauravrp.listings.network.models.Listing;
 import com.example.sauravrp.listings.viewmodels.ListingsViewModel;
 import com.example.sauravrp.listings.viewmodels.models.ListingsUiModel;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -19,6 +20,7 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
@@ -88,15 +90,12 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     private void setupGoogleMap() {
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.details_map);
         mapFragment.getMapAsync(this);
-
-        bind();
-        listingsViewModel.searchListings(getQueryStringFromBundle());
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-//        bind();
+        bind();
     }
 
     @Override
@@ -124,9 +123,15 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         }
 
         if(googleMap != null) {
+            LatLngBounds.Builder latLngBoundsBuilder =  LatLngBounds.builder();
             for(ListingsUiModel item: resultList) {
-                drawListingMarker(item);
+                LatLng latLng = new LatLng(item.getLatitude(), item.getLongitude());
+                drawListingMarker(item, latLng);
+                latLngBoundsBuilder.include(latLng);
             }
+
+            LatLngBounds latLngBounds = latLngBoundsBuilder.build();
+            googleMap.setOnMapLoadedCallback(() -> googleMap.moveCamera(CameraUpdateFactory.newLatLngBounds(latLngBounds, 100)));
         }
     }
 
@@ -139,15 +144,11 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     public void onMapReady(GoogleMap googleMap) {
         this.googleMap = googleMap;
         googleMap.setOnInfoWindowClickListener(markerInfoOnClickListener);
-        // move the camera.
-        LatLng userLoc = new LatLng(listingsViewModel.getUserLocation().getLatitiude(),
-                listingsViewModel.getUserLocation().getLongitude());
-        googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(userLoc, ZOOM_LEVEL));
+        listingsViewModel.searchListings(getQueryStringFromBundle());
 
     }
 
-    private void drawListingMarker(ListingsUiModel listing) {
-        LatLng latLng = new LatLng(listing.getLatitude(), listing.getLongitude());
+    private void drawListingMarker(ListingsUiModel listing, LatLng latLng) {
         Marker marker = googleMap.addMarker(new MarkerOptions()
                         .position(latLng).title(listing.getName()));
         marker.setTag(listing);

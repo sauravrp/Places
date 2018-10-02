@@ -5,13 +5,25 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Build;
+import android.util.Log;
 
 public class IntentHelper {
+
+    private static final String TAG = "IntentHelper";
 
     static public void launchPhone(Context ctx, String phoneNumber) {
         Intent intent = new Intent(Intent.ACTION_DIAL);
         intent.setData(Uri.parse("tel:" + phoneNumber));
         launchActivity(ctx, intent);
+    }
+
+    static public void launchWeblink(Context ctx, String urlString) {
+        try {
+            Uri uri = Uri.parse(urlString);
+            launchActivity(ctx, new Intent(Intent.ACTION_VIEW, uri));
+        } catch (Exception e) {
+            Log.e(TAG, e.toString());
+        }
     }
 
     static public void launchMaps(Context ctx, String title, String street, String city, String state) {

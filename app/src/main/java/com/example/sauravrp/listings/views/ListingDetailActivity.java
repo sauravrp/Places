@@ -8,17 +8,22 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
+import android.util.Log;
 
 import com.example.sauravrp.listings.BR;
 import com.example.sauravrp.listings.R;
 import com.example.sauravrp.listings.helpers.IntentHelper;
 import com.example.sauravrp.listings.viewmodels.ListingDetailViewModel;
+import com.example.sauravrp.listings.viewmodels.models.ListingsUiDetailModel;
 import com.example.sauravrp.listings.viewmodels.models.ListingsUiModel;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.LatLngBounds;
+import com.google.android.gms.maps.model.MarkerOptions;
 
 import javax.inject.Inject;
 
@@ -27,6 +32,7 @@ import dagger.android.AndroidInjection;
 
 public class ListingDetailActivity extends AppCompatActivity implements OnMapReadyCallback {
 
+    private final static String TAG = "ListingDetailActivity";
     private final static String SELECTION = "selection";
 
     public static void startActivity(Context ctx, ListingsUiModel selected) {
@@ -39,6 +45,8 @@ public class ListingDetailActivity extends AppCompatActivity implements OnMapRea
     ListingDetailViewModel viewModel;
 
     private GoogleMap googleMap;
+
+    private SupportMapFragment mapFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,12 +65,14 @@ public class ListingDetailActivity extends AppCompatActivity implements OnMapRea
 
         viewModel.getSelectedAddress().observe(this, this::gotoAddress);
         viewModel.getSelectedPhoneNumber().observe(this, this::callPhoneNumber);
+        viewModel.getSelectedWebSite().observe(this, this::gotoWebsite);
+
 
         setupGoogleMap();
     }
 
     private void setupGoogleMap() {
-        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.details_map);
+        mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.details_map);
         mapFragment.getMapAsync(this);
     }
 
@@ -77,18 +87,52 @@ public class ListingDetailActivity extends AppCompatActivity implements OnMapRea
         }
     }
 
-    private void gotoAddress(ListingsUiModel data) {
-//        if(!TextUtils.isEmpty(data.getAddress().getStreet())
-//                && !TextUtils.isEmpty(data.getAddress().getCity())) {
-//            IntentHelper.launchMaps(this, data.getTitle(), data.getAddress().getStreet(), data.getAddress().getCity(), data.getAddress().getState());
-//        }
+    private void gotoWebsite(String url) {
+        if(!TextUtils.isEmpty(url)) {
+            IntentHelper.launchWeblink(this, url);
+        }
+    }
+
+    private void gotoAddress(ListingsUiDetailModel data) {
+        if(!TextUtils.isEmpty(data.getAddress().getStreet())
+                && !TextUtils.isEmpty(data.getAddress().getCity())) {
+            IntentHelper.launchMaps(this, data.getName(), data.getAddress().getStreet(), data.getAddress().getCity(), data.getAddress().getState());
+        }
     }
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
+        if(googleMap == null) {
+            return;
+        }
+
         this.googleMap = googleMap;
-        LatLng seattle = new LatLng(viewModel.getUserLocation().getLatitiude(),
-                viewModel.getUserLocation().getLongitude());
-        googleMap.moveCamera(CameraUpdateFactory.newLatLng(seattle));
+
+        LatLng userLoc = new LatLng(viewModel.getUserLocation().getLatitiude(), viewModel.getUserLocation().getLongitude());
+        LatLng latLng = new LatLng(viewModel.getSelection().getValue().getLatitude(), viewModel.getSelection().getValue().getLongitude());
+
+        LatLngBounds latLngBounds =  LatLngBounds.builder().include(userLoc).include(latLng).build();
+        Log.d(TAG, latLngBounds.toString());
+
+        drawCurrentLocationMarker(userLoc);
+        drawListingMarker(latLng);
+
+        googleMap.setOnMapLoadedCallback(() -> googleMap.moveCamera(CameraUpdateFactory.newLatLngBounds(latLngBounds, 100)));
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        googleMap = null;
+    }
+
+    private void drawListingMarker(LatLng latLng) {
+       googleMap.addMarker(new MarkerOptions()
+                .position(latLng));
+    }
+
+    private void drawCurrentLocationMarker(LatLng latLng) {
+        googleMap.addMarker(new MarkerOptions().icon(BitmapDescriptorFactory.fromResource(R.drawable.twotone_my_location_black_24))
+                .position(latLng));
     }
 }
