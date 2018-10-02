@@ -3,10 +3,8 @@ package com.example.sauravrp.listings.viewmodels;
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MutableLiveData;
 import android.arch.lifecycle.ViewModel;
-import android.text.TextUtils;
+import android.databinding.ObservableList;
 
-import com.example.sauravrp.listings.network.models.Category;
-import com.example.sauravrp.listings.network.models.Listing;
 import com.example.sauravrp.listings.repo.interfaces.IDataModel;
 import com.example.sauravrp.listings.repo.interfaces.IStorageModel;
 import com.example.sauravrp.listings.service.interfaces.ILocationService;
@@ -14,9 +12,7 @@ import com.example.sauravrp.listings.service.models.Location;
 import com.example.sauravrp.listings.viewmodels.helper.ModelConverters;
 import com.example.sauravrp.listings.viewmodels.models.ListingsUiModel;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 import io.reactivex.Observable;
 import io.reactivex.subjects.PublishSubject;
@@ -37,6 +33,10 @@ public class ListingsViewModel extends ViewModel {
         this.storageModel = storageModel;
     }
 
+    public ObservableList<String> getFavorites() {
+        return storageModel.getFavorites();
+    }
+
     public Location getUserLocation() {
         return locationService.getUserLocation();
     }
@@ -44,7 +44,7 @@ public class ListingsViewModel extends ViewModel {
     public Observable<List<ListingsUiModel>> getListings() {
         return listingsSubject
                 .flatMap(query -> dataModel.getListings(locationService.getUserLocation().getCurrentLocation(), query).toObservable())
-                .flatMap(list -> Observable.just(ModelConverters.createListingsUiModels(list, storageModel.getFavorites(), locationService)));
+                .flatMap(list -> Observable.just(ModelConverters.createListingsUiModels(list, locationService)));
     }
 
     public LiveData<ListingsUiModel> getSelectedListing() {

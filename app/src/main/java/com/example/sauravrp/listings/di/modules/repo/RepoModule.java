@@ -18,6 +18,7 @@ import dagger.Provides;
 public class RepoModule {
 
     private DataRepo yahooDataService;
+    private StorageRepo storageRepo;
 
     @Provides
     IDataModel providesDataModel(FoursquareAPI yahooAPI, ISchedulerProvider schedulerProvider) {
@@ -29,6 +30,9 @@ public class RepoModule {
 
     @Provides
     IStorageModel providesStorageModel(@Named("app_context") Context ctx) {
-        return new StorageRepo(ctx);
+        if(storageRepo == null) {
+            storageRepo = new StorageRepo(ctx);
+        }
+        return storageRepo;
     }
 }

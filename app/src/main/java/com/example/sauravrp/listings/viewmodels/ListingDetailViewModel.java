@@ -3,6 +3,7 @@ package com.example.sauravrp.listings.viewmodels;
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MutableLiveData;
 import android.arch.lifecycle.ViewModel;
+import android.databinding.ObservableList;
 import android.util.Log;
 
 import com.example.sauravrp.listings.repo.interfaces.IDataModel;
@@ -23,6 +24,10 @@ public class ListingDetailViewModel extends ViewModel {
     private final ILocationService locationService;
 
     private MutableLiveData<ListingsUiDetailModel> selection = new MutableLiveData<>();
+
+    public ObservableList<String> getFavorites() {
+        return storageModel.getFavorites();
+    }
 
     public ListingDetailViewModel(ILocationService locationService, IDataModel dataModel, IStorageModel storageModel) {
         this.locationService = locationService;
@@ -52,16 +57,10 @@ public class ListingDetailViewModel extends ViewModel {
 
     public void favorite() {
         storageModel.addFavorite(selection.getValue().getId());
-        ListingsUiDetailModel data = selection.getValue();
-        data.setIsFavorite(true);
-        selection.setValue(data);
     }
 
     public void unFavorite() {
         storageModel.removeFavorite(selection.getValue().getId());
-        ListingsUiDetailModel data = selection.getValue();
-        data.setIsFavorite(false);
-        selection.setValue(data);
     }
 
     public LiveData<String> getSelectedPhoneNumber() {
@@ -77,9 +76,8 @@ public class ListingDetailViewModel extends ViewModel {
         selection.setValue(detailModel);
 
         dataModel.getListingDetail(sel.getId()).subscribe(listingDetail -> {
-            boolean isFavorited = storageModel.getFavorites().contains(listingDetail.getId());
-            float distance = locationService.distanceFromInMiles(listingDetail.getLocation().getLat(), listingDetail.getLocation().getLng());
-            ListingsUiDetailModel data = ModelConverters.createListingsUiDetailModel(listingDetail, distance, isFavorited);
+             float distance = locationService.distanceFromInMiles(listingDetail.getLocation().getLat(), listingDetail.getLocation().getLng());
+            ListingsUiDetailModel data = ModelConverters.createListingsUiDetailModel(listingDetail, distance);
                 selection.setValue(data);
             }, e-> {
             // better option woudl be  to send this UI

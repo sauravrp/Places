@@ -14,8 +14,6 @@ public class ListingsUiModel implements Serializable {
 
     private float distance;
 
-    private boolean isFavorite;
-
     private double latitude;
 
     private double longitude;
@@ -39,14 +37,6 @@ public class ListingsUiModel implements Serializable {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public boolean getIsFavorite() {
-        return isFavorite;
-    }
-
-    public void setIsFavorite(boolean favorite) {
-        this.isFavorite = favorite;
     }
 
     public String getCategory() {

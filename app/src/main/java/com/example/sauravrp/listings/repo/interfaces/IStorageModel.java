@@ -1,9 +1,9 @@
 package com.example.sauravrp.listings.repo.interfaces;
 
-import java.util.Set;
+import android.databinding.ObservableList;
 
 public interface IStorageModel {
-    Set<String> getFavorites();
+    ObservableList<String> getFavorites();
     void addFavorite(String id);
     void removeFavorite(String id);
 }

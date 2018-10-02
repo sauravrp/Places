@@ -8,6 +8,12 @@
 
         <import type="android.view.View" />
         <import type="com.example.sauravrp.listings.viewmodels.ListingDetailViewModel" />
+        <import type="android.databinding.ObservableList"/>
+        <import type="java.lang.String"/>
+
+        <variable
+            name="favorites"
+            type="ObservableList&lt;String&gt;"/>
 
         <variable
             name="viewModel"
@@ -48,7 +54,7 @@
                     android:layout_alignParentRight="true"
                     android:onClick="@{() -> viewModel.unFavorite()}"
                     android:padding="8dp"
-                    android:visibility="@{viewModel.selection.isFavorite ? View.VISIBLE : View.GONE}"
+                    android:visibility="@{viewModel.favorites.contains(viewModel.selection.id) ? View.VISIBLE : View.GONE}"
                     android:src="@drawable/outline_favorite_24"
                     android:tint="@color/colorAccent"
                      />
@@ -60,12 +66,10 @@
                     android:layout_alignParentRight="true"
                     android:padding="8dp"
                     android:onClick="@{() -> viewModel.favorite()}"
-                    android:visibility="@{viewModel.selection.isFavorite ? View.GONE : View.VISIBLE}"
+                    android:visibility="@{viewModel.favorites.contains(viewModel.selection.id) ? View.GONE : View.VISIBLE}"
                     android:src="@drawable/outline_favorite_border_24"
                     android:tint="@color/colorAccent"
                     />
-
-
 
 
                 <TextView

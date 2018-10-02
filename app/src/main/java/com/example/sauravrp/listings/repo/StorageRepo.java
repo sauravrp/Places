@@ -2,9 +2,13 @@ package com.example.sauravrp.listings.repo;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.databinding.ObservableArrayList;
+import android.databinding.ObservableList;
+import android.util.ArraySet;
 
 import com.example.sauravrp.listings.repo.interfaces.IStorageModel;
 
+import java.util.Observable;
 import java.util.Set;
 import java.util.TreeSet;
 
@@ -22,28 +26,56 @@ public class StorageRepo implements IStorageModel {
 
     private SharedPreferences sharedPreferences;
 
+    private ObservableArrayList<String> favoriteIds;
+
     @Inject
     public StorageRepo( @Named("app_context") Context appContext) {
         this.appContext = appContext;
         sharedPreferences = this.appContext.getSharedPreferences(SHARED_PREFS_FILE_NAME, MODE_PRIVATE);
     }
 
+    private void initFavorites() {
+        Set<String> ids = sharedPreferences.getStringSet(FAV_KEY, new TreeSet<>());
+        favoriteIds = new ObservableArrayList<>();
+        favoriteIds.addAll(ids);
+    }
+
     @Override
-    public Set<String> getFavorites() {
-        return sharedPreferences.getStringSet(FAV_KEY, new TreeSet<>());
+    public ObservableList<String> getFavorites() {
+        if(favoriteIds == null) {
+            initFavorites();
+        }
+        return favoriteIds;
     }
 
     @Override
     public void addFavorite(String id) {
-        Set<String> data = getFavorites();
-        data.add(id);
-        sharedPreferences.edit().putStringSet(FAV_KEY, data).apply();
+        if(favoriteIds == null) {
+            initFavorites();
+        }
+        if(!favoriteIds.contains(id)) {
+            favoriteIds.add(id);
+        }
+        writeToSharedPrefs();
     }
 
     @Override
     public void removeFavorite(String id) {
-        Set<String> data = getFavorites();
-        data.remove(id);
-        sharedPreferences.edit().putStringSet(FAV_KEY, data).apply();
+        if(favoriteIds == null) {
+            initFavorites();
+        }
+
+        if(favoriteIds.contains(id)) {
+            favoriteIds.remove(id);
+        }
+        writeToSharedPrefs();
     }
+
+    private void writeToSharedPrefs() {
+        TreeSet<String> data = new TreeSet<>(favoriteIds);
+        sharedPreferences.edit().putStringSet(FAV_KEY, data).apply();
+
+    }
+
+
 }

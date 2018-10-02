@@ -9,6 +9,7 @@
 
     <include layout="@layout/welcome_view"/>
 
+
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"

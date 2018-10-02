@@ -12,27 +12,24 @@ import com.example.sauravrp.listings.viewmodels.models.ListingsUiModel;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 public class ModelConverters {
 
     private static final int ICON_SIZE = 64;
     private static final String BACKGROUND_GREY = "bg_";
 
-    public static List<ListingsUiModel> createListingsUiModels(final List<Listing> results, final Set<String> favorites, ILocationService service) {
+    public static List<ListingsUiModel> createListingsUiModels(final List<Listing> results, ILocationService service) {
         ArrayList<ListingsUiModel> newList = new ArrayList<>();
         for (Listing item : results) {
             float distance = service.distanceFromInMiles(item.getLocation().getLat(), item.getLocation().getLng());
-            boolean isFavorited =  favorites.contains(item.getId());
-            newList.add(createListingsUiModel(item, distance, isFavorited));
+            newList.add(createListingsUiModel(item, distance));
         }
         return newList;
     }
 
-    public static ListingsUiModel createListingsUiModel(final Listing result, float distance, boolean isFavorited) {
+    public static ListingsUiModel createListingsUiModel(final Listing result, float distance) {
 
         ListingsUiModel uiModel = new ListingsUiModel(result.getId(), result.getName());
-        uiModel.setIsFavorite(isFavorited);
         if(result.getCategories() != null && result.getCategories().size() > 0) {
             Category category = result.getCategories().get(0);
             uiModel.setCategory(category.getName());
@@ -47,8 +44,8 @@ public class ModelConverters {
         return uiModel;
     }
 
-    public static ListingsUiDetailModel createListingsUiDetailModel(final ListingDetail result, float distance, boolean isFavorited) {
-        ListingsUiDetailModel detailModel = new ListingsUiDetailModel(createListingsUiModel(result, distance, isFavorited));
+    public static ListingsUiDetailModel createListingsUiDetailModel(final ListingDetail result, float distance) {
+        ListingsUiDetailModel detailModel = new ListingsUiDetailModel(createListingsUiModel(result, distance));
         detailModel.setUrl(result.getUrl());
         detailModel.setPhone(result.getContact().getFormattedPhone());
         detailModel.setAddress(new ListingsAddressUiModel(result.getLocation().getAddress(),
