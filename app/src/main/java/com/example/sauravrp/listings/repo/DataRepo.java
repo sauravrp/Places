@@ -19,7 +19,7 @@ public class DataRepo implements IDataModel {
     private final static int FETCH_SIZE = 50;
 
     private final static String CLIENT_ID = "LFYPFZ51PUQ2DZTMELQFHKEZTWA1MXJUJLF1WCOCZ4RM2HDU";
-    private final static String CLIENT_SECRET = "QM40YP5GZW3GBLARSIKII3LKZUK054F0CK10TQJDFCRNSUA0";
+    private final static String CLIENT_SECRET = "MTVLDXNOLIBZY50LOF14X2FUC4G32OFEWSNRBMG5UXDPLBSX";
     private final static String VERSION  = "20180928";
 
     private final FoursquareAPI foursquareAPI;

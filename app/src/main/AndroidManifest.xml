@@ -24,8 +24,7 @@
         <activity
             android:name=".views.ListingsActivity"
             android:label="@string/title_activity_home_screen"
-            android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -34,16 +33,12 @@
         </activity>
         <activity
             android:name=".views.ListingDetailActivity"
-            android:label="@string/title_activity_listing_detail"
-            android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar" />
-
+            android:screenOrientation="portrait" />
         <activity
             android:name=".views.MapActivity"
-            android:screenOrientation="portrait"
-            android:parentActivityName=".views.ListingsActivity"
             android:label="@string/title_map_screen"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:parentActivityName=".views.ListingsActivity"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>

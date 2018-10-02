@@ -1,14 +1,17 @@
 package com.example.sauravrp.listings.views;
 
+import android.arch.lifecycle.Observer;
 import android.content.Context;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.databinding.ViewDataBinding;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.View;
 
 import com.example.sauravrp.listings.BR;
 import com.example.sauravrp.listings.R;
@@ -27,6 +30,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
 
 import javax.inject.Inject;
 
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import dagger.android.AndroidInjection;
 
@@ -44,6 +48,9 @@ public class ListingDetailActivity extends AppCompatActivity implements OnMapRea
     @Inject
     ListingDetailViewModel viewModel;
 
+    @BindView(R.id.toolbar)
+    Toolbar toolbar;
+
     private GoogleMap googleMap;
 
     private SupportMapFragment mapFragment;
@@ -60,13 +67,15 @@ public class ListingDetailActivity extends AppCompatActivity implements OnMapRea
         viewModel.setSelection(getSelectionFromBundle());
         binding.setVariable(BR.viewModel, viewModel);
 
-        Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        setTitle("");
+
+        toolbar.setNavigationIcon(R.drawable.outline_arrow_back_24);
+        toolbar.setNavigationOnClickListener(v -> onBackPressed());
 
         viewModel.getSelectedAddress().observe(this, this::gotoAddress);
         viewModel.getSelectedPhoneNumber().observe(this, this::callPhoneNumber);
         viewModel.getSelectedWebSite().observe(this, this::gotoWebsite);
-
 
         setupGoogleMap();
     }
@@ -94,7 +103,7 @@ public class ListingDetailActivity extends AppCompatActivity implements OnMapRea
     }
 
     private void gotoAddress(ListingsUiDetailModel data) {
-        if(!TextUtils.isEmpty(data.getAddress().getStreet())
+        if(data.getAddress() != null && !TextUtils.isEmpty(data.getAddress().getStreet())
                 && !TextUtils.isEmpty(data.getAddress().getCity())) {
             IntentHelper.launchMaps(this, data.getName(), data.getAddress().getStreet(), data.getAddress().getCity(), data.getAddress().getState());
         }

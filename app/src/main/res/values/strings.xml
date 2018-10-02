@@ -26,4 +26,8 @@
     <string name="title_activity_map">MapActivity</string>
     <string name="website_label">Website</string>
     <string name="website_not_found">Website not found</string>
+
+    <string name="title_activity_temp">Temp</string>
+    <string name="dummy_button">Dummy Button</string>
+    <string name="dummy_content">DUMMY\nCONTENT</string>
 </resources>

@@ -3,16 +3,12 @@ package com.example.sauravrp.listings.views;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.View;
 import android.widget.Toast;
 
 import com.example.sauravrp.listings.R;
-import com.example.sauravrp.listings.network.models.Listing;
 import com.example.sauravrp.listings.viewmodels.ListingsViewModel;
 import com.example.sauravrp.listings.viewmodels.models.ListingsUiModel;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -70,18 +66,10 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         setContentView(R.layout.activity_map);
         ButterKnife.bind(this);
 
-
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar.setNavigationIcon(R.drawable.outline_arrow_back_24);
         setSupportActionBar(toolbar);
-
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
+        toolbar.setNavigationOnClickListener(v -> onBackPressed());
 
         setupGoogleMap();
         listingsViewModel.getSelectedListing().observe(this, this::listingSelected);
@@ -93,6 +81,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     }
 
     @Override
+
     protected void onResume() {
         super.onResume();
         bind();
