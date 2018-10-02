@@ -21,6 +21,7 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.util.List;
+import java.util.Objects;
 
 import javax.inject.Inject;
 
@@ -55,7 +56,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 
     private String getQueryStringFromBundle() {
         Bundle extras = getIntent().getExtras();
-        return extras.getString(QUERY);
+        return Objects.requireNonNull(extras).getString(QUERY);
     }
 
 
@@ -66,7 +67,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         setContentView(R.layout.activity_map);
         ButterKnife.bind(this);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         toolbar.setNavigationIcon(R.drawable.outline_arrow_back_24);
         setSupportActionBar(toolbar);
         toolbar.setNavigationOnClickListener(v -> onBackPressed());

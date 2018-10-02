@@ -4,7 +4,6 @@ package com.example.sauravrp.listings;
 import android.arch.core.executor.testing.InstantTaskExecutorRule;
 import android.arch.lifecycle.Observer;
 
-import com.example.sauravrp.listings.network.models.unused.Listing;
 import com.example.sauravrp.listings.repo.interfaces.IDataModel;
 import com.example.sauravrp.listings.viewmodels.ListingsViewModel;
 import com.example.sauravrp.listings.viewmodels.models.ListingsUiModel;

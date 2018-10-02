@@ -1,17 +1,14 @@
 package com.example.sauravrp.listings.views;
 
-import android.arch.lifecycle.Observer;
 import android.content.Context;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.databinding.ViewDataBinding;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.util.Log;
-import android.view.View;
 
 import com.example.sauravrp.listings.BR;
 import com.example.sauravrp.listings.R;
@@ -27,6 +24,8 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.MarkerOptions;
+
+import java.util.Objects;
 
 import javax.inject.Inject;
 
@@ -87,7 +86,7 @@ public class ListingDetailActivity extends AppCompatActivity implements OnMapRea
 
     private ListingsUiModel getSelectionFromBundle() {
         Bundle extras = getIntent().getExtras();
-        return (ListingsUiModel) extras.getSerializable(SELECTION);
+        return (ListingsUiModel) Objects.requireNonNull(extras).getSerializable(SELECTION);
     }
 
     private void callPhoneNumber(String number) {

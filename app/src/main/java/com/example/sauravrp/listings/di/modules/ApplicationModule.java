@@ -3,7 +3,6 @@ package com.example.sauravrp.listings.di.modules;
 import android.app.Application;
 import android.content.Context;
 
-import javax.inject.Inject;
 import javax.inject.Named;
 
 import dagger.Module;

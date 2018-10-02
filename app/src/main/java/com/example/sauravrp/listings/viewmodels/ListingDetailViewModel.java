@@ -88,7 +88,7 @@ public class ListingDetailViewModel extends ViewModel {
             ListingsUiDetailModel data = ModelConverters.createListingsUiDetailModel(listingDetail, distance);
                 selection.setValue(data);
             }, e-> {
-            // better option woudl be  to send this UI
+            // better option would be  to send this UI
             Log.e(TAG, e.toString());
         });
     }

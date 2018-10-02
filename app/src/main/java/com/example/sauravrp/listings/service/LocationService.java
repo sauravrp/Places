@@ -30,9 +30,7 @@ public class LocationService implements ILocationService {
                                                             latitude, longitude,
                                                             results);
 
-        if(results.length > 0) {
-            result = results[0];
-        }
+        result = results[0];
         return result/ METER_TO_MILES;
     }
 }

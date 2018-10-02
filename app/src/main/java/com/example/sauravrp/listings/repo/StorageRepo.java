@@ -63,9 +63,7 @@ public class StorageRepo implements IStorageModel {
             initFavorites();
         }
 
-        if(favoriteIds.contains(id)) {
-            favoriteIds.remove(id);
-        }
+        favoriteIds.remove(id);
         writeToSharedPrefs();
     }
 
