@@ -41,11 +41,11 @@ public class ListingsUiModel implements Serializable {
         this.name = name;
     }
 
-    public boolean isFavorite() {
+    public boolean getIsFavorite() {
         return isFavorite;
     }
 
-    public void setFavorite(boolean favorite) {
+    public void setIsFavorite(boolean favorite) {
         this.isFavorite = favorite;
     }
 

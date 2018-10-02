@@ -6,22 +6,23 @@
     android:layout_height="wrap_content"
     tools:visibility="visible">
 
+
     <com.github.aakira.expandablelayout.ExpandableLinearLayout
         android:id="@+id/welcome_intro_expandible_layout"
-        android:layout_alignParentTop="true"
-        android:orientation="vertical"
-        android:background="@color/colorPrimaryDark"
-        app:ael_expanded="true"
-        android:layout_marginBottom="10dp"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_marginBottom="10dp"
+        android:background="@color/colorPrimaryDark"
+        android:orientation="vertical"
+        app:ael_expanded="true">
 
         <TextView
             android:id="@+id/textView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center_horizontal"
             android:layout_marginTop="50dp"
+            android:gravity="center_horizontal"
             android:padding="10dp"
             android:text="@string/welcome_to_places"
             android:textColor="@color/white"
@@ -35,18 +36,16 @@
             android:layout_marginBottom="50dp"
             android:gravity="center_horizontal"
             android:padding="10dp"
-            android:textColor="@color/white"
             android:text="@string/welcome_to_places_body"
+            android:textColor="@color/white"
             android:textSize="20sp" />
 
     </com.github.aakira.expandablelayout.ExpandableLinearLayout>
-
-
     <SearchView
-        android:layout_below="@+id/welcome_intro_expandible_layout"
         android:id="@+id/search_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@+id/welcome_intro_expandible_layout"
         android:iconifiedByDefault="false">
 
         <requestFocus />

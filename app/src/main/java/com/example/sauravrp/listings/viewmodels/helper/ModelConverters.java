@@ -32,7 +32,7 @@ public class ModelConverters {
     public static ListingsUiModel createListingsUiModel(final Listing result, float distance, boolean isFavorited) {
 
         ListingsUiModel uiModel = new ListingsUiModel(result.getId(), result.getName());
-        uiModel.setFavorite(isFavorited);
+        uiModel.setIsFavorite(isFavorited);
         if(result.getCategories() != null && result.getCategories().size() > 0) {
             Category category = result.getCategories().get(0);
             uiModel.setCategory(category.getName());

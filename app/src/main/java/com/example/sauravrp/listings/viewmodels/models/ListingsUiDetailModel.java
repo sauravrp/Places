@@ -17,7 +17,7 @@ public class ListingsUiDetailModel extends ListingsUiModel {
         setCategory(model.getCategory());
         setIconUrl(model.getIconUrl());
         setDistance(model.getDistance());
-        setFavorite(model.isFavorite());
+        setIsFavorite(model.getIsFavorite());
         setLatitude(model.getLatitude());
         setLongitude(model.getLongitude());
     }

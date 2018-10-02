@@ -46,6 +46,24 @@ public class ListingDetailViewModel extends ViewModel {
         addressSelected.setValue(address);
     }
 
+    public void websiteSelected(String url) {
+
+    }
+
+    public void favorite() {
+        storageModel.addFavorite(selection.getValue().getId());
+        ListingsUiDetailModel data = selection.getValue();
+        data.setIsFavorite(true);
+        selection.setValue(data);
+    }
+
+    public void unFavorite() {
+        storageModel.removeFavorite(selection.getValue().getId());
+        ListingsUiDetailModel data = selection.getValue();
+        data.setIsFavorite(false);
+        selection.setValue(data);
+    }
+
     public LiveData<String> getSelectedPhoneNumber() {
         return phoneNumberSelected;
     }

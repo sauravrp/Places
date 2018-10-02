@@ -159,10 +159,8 @@ public class ListingsActivity extends AppCompatActivity {
 
     private void setupRecyclerView() {
         LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
-        RecyclerView.ItemDecoration itemDecoration = new DividerItemDecoration(this, DividerItemDecoration.VERTICAL);
         listingsAdapter = new ListingsAdapter(listingsViewModel, placesList);
         placesListView.setLayoutManager(layoutManager);
-        placesListView.addItemDecoration(itemDecoration);
         placesListView.setAdapter(listingsAdapter);
     }
 

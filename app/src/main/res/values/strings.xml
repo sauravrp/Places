@@ -24,4 +24,6 @@
     <string name="welcome_to_places_body">Search for your favorite spots</string>
     <string name="results_near_seattle_wa">Results Near Seattle, WA</string>
     <string name="title_activity_map">MapActivity</string>
+    <string name="website_label">Website</string>
+    <string name="website_not_found">Website not found</string>
 </resources>
