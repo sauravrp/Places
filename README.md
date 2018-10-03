@@ -3,7 +3,12 @@
 ![alt text](https://github.com/sauravrp/Places/blob/master/screenshots/places.gif)
 
 ### Comments by Saurav
-Room for improvements.
+* Code uses MVVM architecture, Dagger2, Retrofit, RxJava, RxBindings (for SearchView), Stetho for debugging, Fresco for image loading, butterknife and an Expandible layout.
+* Code also utlizies some of the android architecture components as well as data bindings.
+
+# Room for improvements.
+* App uses SharedPreferences for persistent storage of favorite ids. This can be easily swapped out with a more feasible storage solution by implementing IStorageModel.
+* LocationService currently is hardcoded to Seattle, WA and hardcoded latitude and longitude.
 * On the Map Page, when toolbar is collapsed, title is missing. The back button could be nicer.
 * The map view page on on the collapsing toolbar should be locked.
 * Current test cases focuses on the view model classes. More test cases could be utilized such as Espresso tests and other instrumentation tests.
