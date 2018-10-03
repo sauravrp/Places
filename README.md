@@ -65,7 +65,7 @@ For quick and easy icons, consider using the [Material icons](https://material.i
 
 ### Considerations
 
-We’re upping our game here at HomeAway, and we aim to create world-class app experiences for our customers. Among other criteria, your submission will be evaluated on:
+We’re upping our game here and we aim to create world-class app experiences for our customers. Among other criteria, your submission will be evaluated on:
 
 1. Implementation of the stated requirements
 2. Application Architecture
