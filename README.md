@@ -10,7 +10,6 @@
 * App uses SharedPreferences for persistent storage of favorite ids. This can be easily swapped out with a more feasible storage solution by implementing IStorageModel.
 * LocationService currently is hardcoded to Seattle, WA and hardcoded latitude and longitude.
 * On the Map Page, when toolbar is collapsed, title is missing. The back button could be nicer.
-* The map view page on on the collapsing toolbar should be locked.
 * Current test cases focuses on the view model classes. More test cases could be utilized such as Espresso tests and other instrumentation tests.
 * Code could use more comments
 * Search View currently fires a search on every character typed. One could limit this to at lease x no of characters and notify the user that at least x no. of characters is required to see results.
