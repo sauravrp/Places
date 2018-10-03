@@ -18,6 +18,7 @@
 * Title text view on the Map page seems off by a bit (maybe too much margin).
 * See class 'DataRepo.java' to add your own Foursquare API client id and secret. (See project description below) 
 * Update AndroidManifest.xml with your own Google maps API_KEY.
+* Animations can be added for material design look and feel. example would be to animate specifc items from the list view to the detail screen. 
 
 
 
