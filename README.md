@@ -18,7 +18,7 @@
 * When the map view first loads, user briefly sees a map view of the world and the map view eventually zooms into interest points.
 * Title text view on the Map page seems off by a bit (maybe too much margin).
 * See class 'DataRepo.java' to add your own Foursquare API client id and secret. (See project description below) 
-* Update AndroidManifest.xml with your own API_KEY.
+* Update AndroidManifest.xml with your own Google maps API_KEY.
 
 
 
