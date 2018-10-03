@@ -115,6 +115,7 @@ public class ListingDetailActivity extends AppCompatActivity implements OnMapRea
         }
 
         this.googleMap = googleMap;
+        this.googleMap.getUiSettings().setAllGesturesEnabled(false);
 
         LatLng userLoc = new LatLng(viewModel.getUserLocation().getLatitiude(), viewModel.getUserLocation().getLongitude());
         LatLng latLng = new LatLng(viewModel.getSelection().getValue().getLatitude(), viewModel.getSelection().getValue().getLongitude());
