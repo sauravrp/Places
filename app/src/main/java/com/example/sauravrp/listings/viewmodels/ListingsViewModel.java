@@ -19,7 +19,7 @@ import io.reactivex.subjects.PublishSubject;
 
 public class ListingsViewModel extends ViewModel {
 
-   private final IDataModel dataModel;
+    private final IDataModel dataModel;
     private final IStorageModel storageModel;
     private final ILocationService locationService;
 
